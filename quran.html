@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نور الإسلام - القرآن الكريم</title>
+  <style>
+    body {
+      font-family: 'Lateef', 'Arial', sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: #e6f2ff;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: #1e1e1e;
+      border-color: #555;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      transition: color 0.3s;
+    }
+
+    body.dark-mode h1 {
+      color: #e0e0e0;
+    }
+
+    .dropdown {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: #555;
+      transition: color 0.3s;
+    }
+
+    body.dark-mode label {
+      color: #ccc;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      font-size: 16px;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode select {
+      background-color: #333;
+      border-color: #555;
+      color: #e0e0e0;
+    }
+
+    button {
+      padding: 12px 25px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    audio {
+      margin-top: 25px;
+      width: 100%;
+    }
+
+    .error {
+      color: red;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+
+    /* Hamburger Menu Styles */
+    header {
+      background-color: #2c786c;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #2c786c;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    nav ul.active {
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ff9a00;
+    }
+
+    /* Dark Mode Toggle Button */
+    .dark-mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #2c786c;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    body.dark-mode .dark-mode-toggle {
+      background-color: #1e3a3a;
+    }
+
+    .dark-mode-toggle:hover {
+      background-color: #1f5a4f;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header with Hamburger Menu -->
+  <header>
+    <div class="logo">نور الإسلام</div>
+    <nav>
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul id="nav-menu">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="hadith.html">الأحاديث النبوية</a></li>
+        <li><a href="prayer.html">الصلاة</a></li>
+        <li><a href="adhkar.html">الأذكار</a></li>
+        <li><a href="fasting.html">الصيام</a></li>
+        <li><a href="calendar.html">التقويم الهجري</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>مشغل القرآن الكريم</h1>
+
+    <div class="dropdown">
+      <label for="reciter">اختر القارئ:</label>
+      <select id="reciter" onchange="onReciterChange()">
+        <option value="">اختر القارئ</option>
+      </select>
+      <p id="reciterError" class="error"></p>
+    </div>
+
+    <div class="dropdown">
+      <label for="riwayah">اختر الرواية:</label>
+      <select id="riwayah" onchange="validateSelections()" disabled>
+        <option value="">اختر الرواية</option>
+      </select>
+      <p id="riwayahError" class="error"></p>
+    </div>
+
+    <div class="dropdown">
+      <label for="surah">اختر السورة:</label>
+      <select id="surah" onchange="validateSelections()" disabled>
+        <option value="">اختر السورة</option>
+      </select>
+      <p id="surahError" class="error"></p>
+    </div>
+
+    <button id="playButton" disabled onclick="playAudio()">تشغيل</button>
+
+    <audio id="audioPlayer" controls></audio>
+  </div>
+
+  <!-- Dark Mode Toggle Button -->
+  <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+  <script>
+    const reciterDropdown = document.getElementById('reciter');
+    const surahDropdown = document.getElementById('surah');
+    const riwayahDropdown = document.getElementById('riwayah');
+    const playButton = document.getElementById('playButton');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const reciterError = document.getElementById('reciterError');
+    const surahError = document.getElementById('surahError');
+    const riwayahError = document.getElementById('riwayahError');
+
+    let reciters = [];
+    let surahs = [];
+
+    // Dark Mode Functionality
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle('dark-mode');
+      const button = document.querySelector('.dark-mode-toggle');
+      if (body.classList.contains('dark-mode')) {
+        button.textContent = '☀️';
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        button.textContent = '🌙';
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    }
+
+    // Check Dark Mode Preference
+    function checkDarkMode() {
+      const darkMode = localStorage.getItem('darkMode');
+      if (darkMode === 'enabled') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.dark-mode-toggle').textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark-mode');
+        document.querySelector('.dark-mode-toggle').textContent = '🌙';
+      }
+    }
+
+    checkDarkMode();
+
+    // حفظ الحالة في localStorage
+    function saveState() {
+      const state = {
+        reciter: reciterDropdown.value,
+        riwayah: riwayahDropdown.value,
+        surah: surahDropdown.value,
+        time: audioPlayer.currentTime
+      };
+      localStorage.setItem('quranPlayerState', JSON.stringify(state));
+      console.log('تم حفظ الحالة:', state); // للتأكد من أن الحالة تُحفظ
+    }
+
+    // استرجاع الحالة من localStorage
+    function loadState() {
+      const state = JSON.parse(localStorage.getItem('quranPlayerState'));
+      if (state) {
+        console.log('تم استرجاع الحالة:', state); // للتأكد من أن الحالة تُستعاد
+        reciterDropdown.value = state.reciter;
+        onReciterChange(); // تحديث الروايات بناءً على القارئ المختار
+        setTimeout(() => {
+          riwayahDropdown.value = state.riwayah;
+          surahDropdown.value = state.surah;
+          validateSelections(); // تفعيل زر التشغيل إذا كانت القيم صحيحة
+          if (state.time) {
+            audioPlayer.currentTime = state.time; // استعادة موضع التشغيل
+          }
+        }, 100);
+      }
+    }
+
+    async function loadData() {
+      try {
+        // تحميل القراء
+        const recitersResponse = await fetch('https://mp3quran.net/api/v3/reciters');
+        const recitersData = await recitersResponse.json();
+        if (recitersData.reciters.length === 0) throw new Error('لم يتم العثور على قراء');
+        reciters = recitersData.reciters;
+        reciters.forEach(reciter => {
+          const option = document.createElement('option');
+          option.value = reciter.id;
+          option.textContent = reciter.name;
+          reciterDropdown.appendChild(option);
+        });
+
+        // تحميل السور
+        const surahsResponse = await fetch('https://mp3quran.net/api/v3/suwar');
+        const surahsData = await surahsResponse.json();
+        if (surahsData.suwar.length === 0) throw new Error('لم يتم العثور على سور');
+        surahs = surahsData.suwar;
+        surahs.forEach(surah => {
+          const option = document.createElement('option');
+          option.value = surah.id;
+          option.textContent = surah.name;
+          surahDropdown.appendChild(option);
+        });
+        surahDropdown.disabled = true;
+
+        // تحميل الحالة المحفوظة
+        loadState();
+      } catch (error) {
+        console.error('خطأ أثناء تحميل البيانات:', error);
+        if (error.message.includes('قراء')) reciterError.textContent = error.message;
+        if (error.message.includes('سور')) surahError.textContent = error.message;
+      }
+    }
+
+    function onReciterChange() {
+      const reciterId = reciterDropdown.value;
+      if (reciterId) {
+        const reciter = reciters.find(r => r.id == reciterId);
+        if (reciter && reciter.moshaf) {
+          riwayahDropdown.innerHTML = '<option value="">اختر الرواية</option>';
+          reciter.moshaf.forEach(moshaf => {
+            const option = document.createElement('option');
+            option.value = moshaf.id;
+            option.textContent = moshaf.name;
+            riwayahDropdown.appendChild(option);
+          });
+          riwayahDropdown.disabled = false;
+          surahDropdown.disabled = false;
+        } else {
+          riwayahDropdown.innerHTML = '<option value="">لا توجد روايات متوفرة</option>';
+          riwayahDropdown.disabled = true;
+          surahDropdown.disabled = true;
+        }
+      } else {
+        riwayahDropdown.disabled = true;
+        surahDropdown.disabled = true;
+      }
+      validateSelections();
+      saveState(); // حفظ الحالة عند تغيير القارئ
+    }
+
+    function validateSelections() {
+      const reciterId = reciterDropdown.value;
+      const surahId = surahDropdown.value;
+      const riwayahId = riwayahDropdown.value;
+
+      if (reciterId && surahId && riwayahId) {
+        playButton.disabled = false;
+        const reciter = reciters.find(r => r.id == reciterId);
+        const moshaf = reciter.moshaf.find(m => m.id == riwayahId); // ابحث عن الرواية المختارة
+        const surahIndex = String(surahId).padStart(3, '0');
+
+        if (moshaf && moshaf.server) {
+          // استخدم السيرفر الخاص بالرواية المحددة
+          audioPlayer.src = `${moshaf.server}${surahIndex}.mp3`;
+        }
+      } else {
+        playButton.disabled = true;
+      }
+      saveState(); // حفظ الحالة عند تغيير أي قيمة
+    }
+
+    function playAudio() {
+      audioPlayer.play();
+      saveState(); // حفظ الحالة عند الضغط على تشغيل
+    }
+
+    // حفظ موضع التشغيل كل 5 ثوانٍ
+    setInterval(() => {
+      if (!audioPlayer.paused) {
+        saveState();
+      }
+    }, 5000);
+
+    // Hamburger Menu Functionality
+    function toggleMenu() {
+      const navMenu = document.getElementById('nav-menu');
+      const hamburger = document.querySelector('.hamburger');
+      navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
+    loadData();
+  </script>
+
+</body>
+
+</html>

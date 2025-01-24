@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نور الإسلام - التقويم الهجري</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Amiri', serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: right;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode header {
+            background-color: #1e3a3a;
+        }
+
+        body.dark-mode .section,
+        body.dark-mode .feature,
+        body.dark-mode .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .section h2,
+        body.dark-mode .feature h2,
+        body.dark-mode .card h3 {
+            color: #2c786c;
+        }
+
+        body.dark-mode .cta-button {
+            background-color: #ff9a00;
+            color: #121212;
+        }
+
+        body.dark-mode .cta-button:hover {
+            background-color: #e68900;
+        }
+
+        header {
+            background-color: #2c786c;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: #2c786c;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav ul.active {
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff9a00;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 120, 108, 0.8), rgba(44, 120, 108, 0.8)), url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            animation: slideIn 2s ease-in-out;
+        }
+
+        .cta-button {
+            background-color: #ff9a00;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #e68900;
+            transform: scale(1.1);
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 20px;
+            background-color: white;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        body.dark-mode .features {
+            background-color: #121212;
+        }
+
+        .feature {
+            text-align: center;
+            width: 30%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #ffffff;
+        }
+
+        body.dark-mode .feature {
+            background-color: #1e1e1e;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .section {
+            padding: 50px 20px;
+            background-color: white;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .section {
+            background-color: #1e1e1e;
+        }
+
+        .section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #2c786c;
+            text-align: center;
+        }
+
+        .section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .section .content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .section .content .card {
+            width: 30%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        body.dark-mode .section .content .card {
+            background-color: #2c2c2c;
+        }
+
+        .section .content .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        .countdown div {
+            text-align: center;
+            background-color: #2c786c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #2c786c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode footer {
+            background-color: #1e3a3a;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2c786c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background-color: #1e3a3a;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #1f5a4f;
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature {
+                width: 80%;
+                margin-bottom: 30px;
+            }
+
+            .section .content .card {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">نور الإسلام</div>
+        <nav>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="quran.html">القرآن الكريم</a></li>
+                <li><a href="hadith.html">الأحاديث النبوية</a></li>
+                <li><a href="prayer.html">الصلاة</a></li>
+                <li><a href="adhkar.html">الأذكار</a></li>
+                <li><a href="fasting.html">الصيام</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>التقويم الهجري</h1>
+        <p>تعرف على التواريخ الهجرية والمناسبات الدينية.</p>
+    </section>
+
+    <!-- التقويم الهجري والميلادي -->
+    <section class="section">
+        <h2>التاريخ اليوم</h2>
+        <div class="content">
+            <div class="card">
+                <p id="hijri-date">جاري تحميل التاريخ الهجري...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- المناسبات الدينية -->
+    <section class="section">
+        <h2>المناسبات الدينية</h2>
+        <div class="content">
+            <div class="card">
+                <h3>عاشوراء</h3>
+                <p>يوم عاشوراء هو اليوم العاشر من شهر محرم، ويصادف ذكرى نجاة موسى وقومه من فرعون.</p>
+            </div>
+            <div class="card">
+                <h3>المولد النبوي</h3>
+                <p>يُحتفل بالمولد النبوي في اليوم الثاني عشر من ربيع الأول بذكرى مولد النبي محمد صلى الله عليه وسلم.</p>
+            </div>
+            <div class="card">
+                <h3>شهر رمضان</h3>
+                <p>شهر رمضان هو شهر الصيام والقيام، وفيه أنزل القرآن الكريم.</p>
+            </div>
+            <div class="card">
+                <h3>ليلة القدر</h3>
+                <p>ليلة القدر هي ليلة مباركة في العشر الأواخر من رمضان، وهي خير من ألف شهر.</p>
+            </div>
+            <div class="card">
+                <h3>عيد الفطر</h3>
+                <p>عيد الفطر هو العيد الذي يأتي بعد انتهاء شهر رمضان المبارك.</p>
+            </div>
+            <div class="card">
+                <h3>عيد الأضحى</h3>
+                <p>عيد الأضحى هو العيد الذي يأتي في يوم 10 من ذي الحجة بعد وقفة عرفة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 نور الإسلام. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <script>
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const button = document.querySelector('.dark-mode-toggle');
+            if (body.classList.contains('dark-mode')) {
+                button.textContent = '☀️';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                button.textContent = '🌙';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check Dark Mode Preference
+        function checkDarkMode() {
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '☀️';
+            }
+        }
+
+        checkDarkMode();
+
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Fetch Hijri and Gregorian Dates
+        function fetchDates() {
+            const today = new Date();
+            const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(today);
+            const gregorianDate = new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' }).format(today);
+
+            document.getElementById('hijri-date').textContent = `التاريخ الهجري: ${hijriDate}`;
+            document.getElementById('gregorian-date').textContent = `التاريخ الميلادي: ${gregorianDate}`;
+        }
+
+        fetchDates();
+
+        // Countdown Timer for Next Religious Event
+        const events = [
+            { name: "شهر رمضان", date: "2024-03-11" }, // مثال: تاريخ رمضان 2024
+            { name: "عيد الفطر", date: "2024-04-10" }, // مثال: تاريخ عيد الفطر 2024
+            { name: "عيد الأضحى", date: "2024-06-16" }, // مثال: تاريخ عيد الأضحى 2024
+            { name: "المولد النبوي", date: "2024-10-08" }, // مثال: تاريخ المولد النبوي 2024
+        ];
+
+        function getNextEvent() {
+            const now = new Date();
+            let nextEvent = null;
+            for (const event of events) {
+                const eventDate = new Date(event.date);
+                if (eventDate > now) {
+                    if (!nextEvent || eventDate < new Date(nextEvent.date)) {
+                        nextEvent = event;
+                    }
+                }
+            }
+            return nextEvent;
+        }
+
+        function updateCountdown() {
+            const nextEvent = getNextEvent();
+            if (nextEvent) {
+                document.getElementById('next-event-name').textContent = `أقرب حدث: ${nextEvent.name}`;
+                const eventDate = new Date(nextEvent.date);
+                const now = new Date();
+                const diff = eventDate - now;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            } else {
+                document.getElementById('next-event-name').textContent = "لا توجد أحداث قادمة";
+                document.getElementById('countdown').style.display = 'none';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
